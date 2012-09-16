@@ -1,0 +1,76 @@
+** This is a single-line line comment. ;
+* this is one that
+  spans multiple lines ;
+
+/* This is a single-line block comment. */
+
+/*
+  Here's one that spans
+  more than
+  one line.
+*/
+
+data something ;
+  set yomama ;
+run ;
+
+%macro sample(arg1 = , arg2 = default) ;
+  %do i = 1 %to 9 ;
+    %put Yo mamma! ;
+  %end ;
+
+%mend ;
+
+data sample ;
+  set inset (obs = 2090) ;
+  by mrn ;
+
+  my_date = '25dec1966'd ;
+  other_date = "01jan2010"d ;
+  x = "&something."d ;
+
+  if _n_ >= 8 then do ;
+    y = 4 ;
+    x = x + 3 - 4 ;
+  end ;
+
+  label
+    mrn = "Medical record number"
+    adate = "Admit date"
+    x = 'something'
+  ;
+RUN ;
+
+
+proc print data = sample ;  * hanging comment ;
+  var y ;
+run ;
+
+proc sql ;
+
+  select * from 
+  yomama ;
+
+  reset obs = max ;
+
+  * this is a comment ;
+  create table gnu as
+  SELCT * from something
+  order by 1
+  ;
+
+  create table gnu as
+  SELECT * from something /* boo! */
+  order by 1
+  ;
+
+  create table gnu as
+  sElect * from something
+  order by 1
+  ;
+
+quit ;
+
+data gnu ;
+  set gnu ;
+run ;

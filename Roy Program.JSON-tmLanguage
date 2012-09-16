@@ -1,0 +1,60 @@
+{ "name": "Roy Program",
+  "scopeName": "source.roy",
+  "fileTypes": ["roy"],
+  "patterns": [
+    {  "name": "keyword.control.roy",
+       "match": "(?i:\\b(if|while|until|for|do|end|then|else|run|quit|cancel)\\b)"
+    },
+    {  "name": "keyword.other.roy",
+       "match": "(?i:\\b((data|set|merge) (\\w+))\\b)",
+       "captures": {
+           "1": { "name": "support.function.roy" },
+           "2": {"name": "entity.name.roy"}
+       }
+    },
+    {  "name": "keyword.operator.roy",
+       "match": "\\b(\\+)\\b"
+    },
+    {  "name": "keyword.datastep.roy",
+       "match": "(?i:\\b(by|label|format)\\b)"
+    },
+    {  "name": "meta.function-call.roy",
+       "match": "(?i:\\b(proc)\\b)"
+    },
+    {  "name": "variable.language.roy",
+       "match": "(?i:\\b(_n_|_error_)\\b)"
+    },
+    {  "name": "comment.block.roy",
+       "begin": "(?<!select |SELECT )\\*",
+       "end": ";",
+       "comment": "This is a kludge, to keep the SQL construct 'select *' from processing as a comment.  I could not figure out how to make the negative lookbehind case-insensitive."
+    },
+    {  "name": "comment.block.roy",
+       "begin": "/\\*",
+       "end": "\\*/"
+    },
+    {  "name": "comment.line.roy",
+       "match": "\\*.*;"
+    },
+    {  "name": "constant.numeric.roy",
+       "match": "\\b\\d+\\b"
+    },
+    {  "name": "constant.date.roy",
+       "match": "(?i:['\"]\\d{1,2}(jan|feb|apr|may|jun|jul|aug|sep|oct|nov|dec)\\d{2,4}['\"]d)"
+    },
+    {  "name": "string.quoted.single.roy",
+       "match": "'.+'"
+    },
+    {  "name": "string.quoted.double.roy",
+       "match": "\".+\""
+    },
+    { "begin": "(?i:\\bproc sql ;\\b)",
+      "end": "(?i:\\bquit ;\\b)",
+      "patterns": [
+        {"include": "source.sql"}
+      ]
+    }
+  ],
+  "uuid": "7e721b1e-6265-4865-bc4b-308d49affba1"
+}
+
