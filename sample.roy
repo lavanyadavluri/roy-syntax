@@ -53,9 +53,12 @@ proc sql ;
 
   reset obs = max ;
 
+  * this is a comment
+    that spans multiple lines ;
+
   * this is a comment ;
   create table gnu as
-  SELCT * from something
+  SELECT *, max(x) as maxine from something
   order by 1
   ;
 

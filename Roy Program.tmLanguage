@@ -19,25 +19,58 @@
 		<dict>
 			<key>captures</key>
 			<dict>
-				<key>1</key>
+				<key>2</key>
 				<dict>
 					<key>name</key>
 					<string>support.function.roy</string>
 				</dict>
-				<key>2</key>
+				<key>3</key>
 				<dict>
 					<key>name</key>
-					<string>entity.name.roy</string>
+					<string>entity.name.function.roy</string>
 				</dict>
 			</dict>
 			<key>match</key>
-			<string>(?i:\b((data|set|merge) (\w+))\b)</string>
+			<string>(?i:\b((data|set|merge)\s+(\w+))\b)</string>
 			<key>name</key>
 			<string>keyword.other.roy</string>
 		</dict>
 		<dict>
+			<key>begin</key>
+			<string>(?i:\bproc\s*sql\s*;)</string>
+			<key>comment</key>
+			<string>Looks like for this to work there must be a *name* as well as the patterns/include bit.</string>
+			<key>end</key>
+			<string>(?i:\bquit\s*;)</string>
+			<key>name</key>
+			<string>sql.block.roy</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>\*.*;</string>
+					<key>name</key>
+					<string>comment.line.roy</string>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>(?&lt;!select |SELECT )\*</string>
+					<key>comment</key>
+					<string>This is a kludge, to keep the SQL construct 'select *' from processing as a comment.  I could not figure out how to make the negative lookbehind case-insensitive.</string>
+					<key>end</key>
+					<string>;</string>
+					<key>name</key>
+					<string>comment.block.roy</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>source.sql</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
 			<key>match</key>
-			<string>\b(\+)\b</string>
+			<string>\b([+\-*^/=])\b</string>
 			<key>name</key>
 			<string>keyword.operator.roy</string>
 		</dict>
@@ -48,8 +81,16 @@
 			<string>keyword.datastep.roy</string>
 		</dict>
 		<dict>
+			<key>captures</key>
+			<dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.proc.roy</string>
+				</dict>
+			</dict>
 			<key>match</key>
-			<string>(?i:\b(proc)\b)</string>
+			<string>(?i:\b(proc (\w+))\b)</string>
 			<key>name</key>
 			<string>meta.function-call.roy</string>
 		</dict>
@@ -106,21 +147,6 @@
 			<string>".+"</string>
 			<key>name</key>
 			<string>string.quoted.double.roy</string>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>(?i:\bproc sql ;\b)</string>
-			<key>end</key>
-			<string>(?i:\bquit ;\b)</string>
-			<key>name</key>
-			<string>honey.boo.boo.roy</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>include</key>
-					<string>source.sql</string>
-				</dict>
-			</array>
 		</dict>
 	</array>
 	<key>scopeName</key>

@@ -6,20 +6,42 @@
        "match": "(?i:\\b(if|while|until|for|do|end|then|else|run|quit|cancel)\\b)"
     },
     {  "name": "keyword.other.roy",
-       "match": "(?i:\\b((data|set|merge) (\\w+))\\b)",
+       "match": "(?i:\\b((data|set|merge)\\s+(\\w+))\\b)",
        "captures": {
-           "1": { "name": "support.function.roy" },
-           "2": {"name": "entity.name.roy"}
+           "2": { "name": "support.function.roy" },
+           "3": {"name": "entity.name.function.roy"}
        }
     },
+    { "begin": "(?i:\\bproc\\s*sql\\s*;)",
+      "end": "(?i:\\bquit\\s*;)",
+      "name": "sql.block.roy",
+      "patterns": [
+        {
+          "name": "comment.line.roy",
+          "match": "\\*.*;"
+        },
+        {  "name": "comment.block.roy",
+           "begin": "(?<!select |SELECT )\\*",
+           "end": ";",
+           "comment": "This is a kludge, to keep the SQL construct 'select *' from processing as a comment.  I could not figure out how to make the negative lookbehind case-insensitive."
+        },
+          {
+          "include": "source.sql"
+        }
+      ],
+      "comment": "Looks like for this to work there must be a *name* as well as the patterns/include bit."
+    },
     {  "name": "keyword.operator.roy",
-       "match": "\\b(\\+)\\b"
+       "match": "\\b([+\\-*^/=])\\b"
     },
     {  "name": "keyword.datastep.roy",
        "match": "(?i:\\b(by|label|format)\\b)"
     },
     {  "name": "meta.function-call.roy",
-       "match": "(?i:\\b(proc)\\b)"
+       "match": "(?i:\\b(proc (\\w+))\\b)",
+       "captures": {
+        "2": { "name": "entity.name.proc.roy" }
+        }
     },
     {  "name": "variable.language.roy",
        "match": "(?i:\\b(_n_|_error_)\\b)"
@@ -47,12 +69,6 @@
     },
     {  "name": "string.quoted.double.roy",
        "match": "\".+\""
-    },
-    { "begin": "(?i:\\bproc sql ;\\b)",
-      "end": "(?i:\\bquit ;\\b)",
-      "patterns": [
-        {"include": "source.sql"}
-      ]
     }
   ],
   "uuid": "7e721b1e-6265-4865-bc4b-308d49affba1"
